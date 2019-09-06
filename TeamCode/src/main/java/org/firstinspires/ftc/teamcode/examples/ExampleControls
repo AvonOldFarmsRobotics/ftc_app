@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class ExampleControls extends OpMode {// classes controlling robots must exted OpMode class
 
-
     //here, motors are defined. This example class contains motors for a four wheel robot.
 
     //F = front
@@ -57,6 +56,9 @@ public class ExampleControls extends OpMode {// classes controlling robots must 
         //this is a helper method for all controls for the robot.
         controlRobot();
 
+        //this is a helper method for reporting data to the controller phone.
+        reportTelemetry();
+
     }
 
     //this is a helper method that contains all controls for the robot.
@@ -82,7 +84,23 @@ public class ExampleControls extends OpMode {// classes controlling robots must 
             motorBL.setPower(leftPower);
             motorBR.setPower(rightPower);
         }
+    }
 
+    //helper method to report data to controller phone.
+    public void reportTelemetry() {
+
+        //report gamepad1 left joystick data
+        telemetry.addData("gamepad1 leftX", gamepad1.left_stick_x);
+        telemetry.addData("gamepad1 leftY", gamepad1.left_stick_y);
+
+        //report motors' power
+        telemetry.addData("motorFL", motorFL.getPower());
+        telemetry.addData("motorFR", motorFR.getPower());
+        telemetry.addData("motorBL", motorBL.getPower());
+        telemetry.addData("motorBR", motorBR.getPower());
+
+        //update the data screen.
+        telemetry.update();
     }
 
     //helper method to reset all motors to not moving.
